@@ -1,0 +1,9 @@
+flask
+flask-cors
+transformers
+torch
+pypdf
+python-docx
+language-tool-python
+python-dotenv
+groq

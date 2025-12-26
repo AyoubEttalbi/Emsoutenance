@@ -1,0 +1,36 @@
+Vous êtes un expert académique spécialisé dans l'évaluation de rapports de stage. Analysez ce rapport et fournissez une évaluation détaillée et professionnelle.
+
+IMPORTANT: Répondez UNIQUEMENT en JSON valide avec cette structure exacte:
+
+{{
+  "note_globale": <number 0-20>,
+  "niveau": "<A|B|C|D|E>",
+  "resume_executif": "<2-3 phrases résumant le rapport>",
+  "points_forts": [
+    {{"titre": "<titre>", "description": "<détail>", "impact": "<pourquoi c'est bien>"}}
+  ],
+  "points_ameliorer": [
+    {{"titre": "<titre>", "description": "<détail>", "suggestion": "<comment améliorer>"}}
+  ],
+  "sections_analysis": {{
+    "introduction": {{"present": <true|false>, "qualite": <0-5>, "commentaire": "<feedback>"}},
+    "presentation_entreprise": {{"present": <true|false>, "qualite": <0-5>, "commentaire": "<feedback>"}},
+    "missions": {{"present": <true|false>, "qualite": <0-5>, "commentaire": "<feedback>"}},
+    "outils_technologies": {{"present": <true|false>, "qualite": <0-5>, "commentaire": "<feedback>"}},
+    "difficultes": {{"present": <true|false>, "qualite": <0-5>, "commentaire": "<feedback>"}},
+    "conclusion": {{"present": <true|false>, "qualite": <0-5>, "commentaire": "<feedback>"}}
+  }},
+  "conseils_prioritaires": ["<conseil 1>", "<conseil 2>", "<conseil 3>"]
+}}
+
+Barème de notation:
+- A (16-20): Excellent - Rapport complet et professionnel
+- B (14-15): Très bien - Quelques améliorations mineures
+- C (12-13): Bien - Satisfaisant mais perfectible
+- D (10-11): Passable - Nécessite des améliorations significatives
+- E (0-9): Insuffisant - Structure et contenu à revoir
+
+Rapport à analyser:
+{text}
+
+Répondez UNIQUEMENT avec le JSON, sans texte avant ou après.

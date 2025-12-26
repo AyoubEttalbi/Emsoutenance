@@ -1,0 +1,24 @@
+# General
+.DS_Store
+.env
+.cache
+
+# Node.js
+**/node_modules/
+
+# PHP / Laravel
+**/vendor/
+**/storage/*.key
+**/storage/framework/cache/data/*
+**/storage/framework/sessions/*
+**/storage/framework/views/*
+**/storage/logs/*
+**/.phpunit.result.cache
+
+# Python
+**/venv/
+**/__pycache__/
+
+# IDEs
+.vscode/
+.idea/
