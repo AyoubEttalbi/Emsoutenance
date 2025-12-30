@@ -38,9 +38,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Routes professeurs
     Route::prefix('professors')->middleware('role:professor')->group(function () {
+        
         Route::get('/profile', [App\Http\Controllers\Api\ProfessorController::class, 'profile']);
         Route::get('/students', [App\Http\Controllers\Api\ProfessorController::class, 'getStudents']);
         Route::get('/reports', [App\Http\Controllers\Api\ProfessorController::class, 'getReports']);
+        // ...
         Route::post('/reports/{report}/remarks', [App\Http\Controllers\Api\ProfessorController::class, 'addRemark']);
         Route::post('/reports/{report}/validate', [App\Http\Controllers\Api\ProfessorController::class, 'validateReport']);
         Route::get('/defenses', [App\Http\Controllers\Api\ProfessorController::class, 'getDefenses']);
@@ -48,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Routes administrateur
     Route::prefix('admin')->middleware('role:admin')->group(function () {
+       
         // Gestion des étudiants
         Route::apiResource('students', App\Http\Controllers\Api\Admin\StudentController::class);
 
@@ -55,11 +58,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('professors', App\Http\Controllers\Api\Admin\ProfessorController::class);
 
         // Gestion des rapports
-        Route::get('/reports', [App\Http\Controllers\Api\Admin\ReportController::class, 'index']);
         Route::post('/reports/{report}/validate', [App\Http\Controllers\Api\Admin\ReportController::class, 'validateReport']);
 
         // Gestion des soutenances
         Route::apiResource('defenses', App\Http\Controllers\Api\Admin\DefenseController::class);
+        Route::get('/reports', [App\Http\Controllers\Api\Admin\ReportController::class, 'index']);
         Route::post('/defenses/{defense}/jury', [App\Http\Controllers\Api\Admin\DefenseController::class, 'assignJury']);
 
         // Planning
@@ -74,9 +77,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/contact-messages/{id}/mark-unread', [App\Http\Controllers\Api\Admin\ContactMessageController::class, 'markAsUnread']);
         Route::delete('/contact-messages/{id}', [App\Http\Controllers\Api\Admin\ContactMessageController::class, 'destroy']);
     });
+    
+    // AI Report Routes
+    Route::post('/reports/upload', [ReportController::class, 'upload']);
+    Route::get('/reports/history', [ReportController::class, 'getHistory']);
+    Route::post('/reports/{id}/ai-analyze', [AiAnalysisController::class, 'triggerAnalysis']);
+    Route::get('/reports/{id}/ai-feedback', [AiAnalysisController::class, 'getFeedback']);
 });
-// AI Report Routes
-Route::post('/reports/upload', [ReportController::class, 'upload']);
-Route::get('/reports/history', [ReportController::class, 'getHistory']);
-Route::post('/reports/{id}/ai-analyze', [AiAnalysisController::class, 'triggerAnalysis']);
-Route::get('/reports/{id}/ai-feedback', [AiAnalysisController::class, 'getFeedback']);

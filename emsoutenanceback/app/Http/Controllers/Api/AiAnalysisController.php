@@ -27,8 +27,8 @@ class AiAnalysisController extends Controller
 
         try {
             $report = Report::findOrFail($reportId);
-            // Use Storage::path() to get the absolute path from the default disk
-            $filePath = Storage::path($report->file_path);
+            // Use Storage::disk('public')->path() to get the absolute path from the public disk
+            $filePath = Storage::disk('public')->path($report->file_path);
 
             if (!file_exists($filePath)) {
                 throw new \Exception("Report file not found at " . $filePath);

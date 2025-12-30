@@ -13,10 +13,10 @@ class ReportController extends Controller
     public function upload(ReportUploadRequest $request)
     {
         try {
-            $path = $request->file('report')->store('reports');
+            $path = $request->file('report')->store('reports', 'public');
 
             $report = Report::create([
-                'student_id' => auth()->id() ?? 1,
+                'student_id' => $request->user()->student->id,
                 'file_path' => $path,
                 'original_filename' => $request->file('report')->getClientOriginalName(),
                 'version' => $request->version,
@@ -32,17 +32,21 @@ class ReportController extends Controller
                 'report_id' => $report->id
             ], 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            file_put_contents(storage_path('logs/debug_upload.log'), $e->getMessage() . "\n" . $e->getTraceAsString());
+            return response()->json([
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ], 500);
         }
     }
 
     /**
      * Get all reports with AI feedback for the authenticated student
      */
-    public function getHistory()
+    public function getHistory(Request $request)
     {
         try {
-            $studentId = auth()->id() ?? 1;
+            $studentId = $request->user()->student->id;
 
             $reports = Report::with('aiFeedback')
                 ->where('student_id', $studentId)
